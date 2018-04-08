@@ -1,0 +1,12 @@
+UnKnow:
+  cn: 未知错误
+  en: unknow error
+UserNotExists:
+  cn: 用户不存在
+  en: the user not exists
+NoLimit:
+  cn: 没有权限
+  en: Permission denied
+PasswordError:
+  cn: 密码错误
+  en: Password error

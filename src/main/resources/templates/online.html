@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ONLYOFFICE</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <style>
+        html {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            background: #fff;
+            color: #333;
+            font-family: Arial, Tahoma,sans-serif;
+            font-size: 12px;
+            font-weight: normal;
+            height: 100%;
+            margin: 0;
+            overflow-y: hidden;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        .form {
+            height: 100%;
+        }
+
+        div {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script type="text/javascript" src="${api}"></script>
+    <script type="text/javascript" language="javascript">
+
+        var docEditor;
+        var fileName = "${fileName}";
+        var fileType = "${fileType}";
+
+        var innerAlert = function (message) {
+            if (console && console.log)
+                console.log(message);
+        };
+
+        var onReady = function () {
+            innerAlert("Document editor ready");
+        };
+
+        var onDocumentStateChange = function (event) {
+            var title = document.title.replace(/\*$/g, "");
+            document.title = title + (event.data ? "*" : "");
+        };
+
+        var onRequestEditRights = function () {
+            location.href = location.href.replace(RegExp("action=view\&?", "i"), "");
+        };
+
+        var onError = function (event) {
+            if (event)
+                innerAlert(event.data);
+        };
+
+        var onOutdatedVersion = function (event) {
+            location.reload(true);
+        };
+
+        var сonnectEditor = function () {
+
+            docEditor = new DocsAPI.DocEditor("iframeEditor",
+                {
+                    width: "100%",
+                    height: "100%",
+                    type: "desktop",
+                    documentType: "${docType}",
+
+                    document: {
+                        title: fileName,
+                        url: "${downloadUrl}",
+                        fileType: fileType,
+                        key: "${id}",
+
+                        info: {
+                            author: "Me",
+                            created: "04/08/2018",
+                        },
+
+                        permissions: {
+                            edit: true,
+                            download: true,
+                        }
+                    },
+                    editorConfig: {
+                        mode: "${mode}",
+
+                        lang: "zh",
+
+                        callbackUrl: "${configCallback}",
+
+                        user: {
+                            id: "${userId}",
+                            name: "${userName}",
+                        },
+                        //
+                        // embedded: {
+                        //     saveUrl: "http://10.6.0.153:8081/OnlineEditorsExampleJava/app_data/10.6.0.153/sample%20%2812%29.docx",
+                        //     embedUrl: "http://10.6.0.153:8081/OnlineEditorsExampleJava/app_data/10.6.0.153/sample%20%2812%29.docx",
+                        //     shareUrl: "http://10.6.0.153:8081/OnlineEditorsExampleJava/app_data/10.6.0.153/sample%20%2812%29.docx",
+                        //     toolbarDocked: "top",
+                        // },
+
+                        customization: {
+                            about: true,
+                            feedback: true,
+                            goback: {
+                                url: "${callback}",
+                            },
+                        },
+                    },
+                    events: {
+                        "onReady": onReady,
+                        "onDocumentStateChange": onDocumentStateChange,
+                        'onRequestEditRights': onRequestEditRights,
+                        "onError": onError,
+                        "onOutdatedVersion": onOutdatedVersion,
+                    }
+                });
+        };
+
+        if (window.addEventListener) {
+            window.addEventListener("load", сonnectEditor);
+        } else if (window.attachEvent) {
+            window.attachEvent("load", сonnectEditor);
+        }
+
+        function getXmlHttp() {
+            var xmlhttp;
+            try {
+                xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (e) {
+                try {
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                } catch (ex) {
+                    xmlhttp = false;
+                }
+            }
+            if (!xmlhttp && typeof XMLHttpRequest !== "undefined") {
+                xmlhttp = new XMLHttpRequest();
+            }
+            return xmlhttp;
+        }
+
+    </script>
+
+</head>
+<body>
+<div class="form">
+    <div id="iframeEditor"></div>
+</div>
+</body>
+</html>

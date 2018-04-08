@@ -1,0 +1,39 @@
+logging:
+  level:
+    org.springframework: INFO
+    com.example: DEBUG
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations:
+    - classpath:/static/dist/
+  freemarker:
+    allow-request-override: false
+    cache: true
+    check-template-location: true
+    charset: UTF-8
+    content-type: text/html
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+    suffix: .html
+    template-loader-path: classpath:/templates/
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 512MB
+      max-request-size: 1024MB
+office:
+  store: /files/
+  max-size: 5242880
+  converter-url: http://192.168.12.16:9000/ConvertService.ashx
+  tempstore-url: http://192.168.12.16:9000/ResourceService.ashx
+  api-url: http://192.168.12.16:9000/web-apps/apps/api/documents/api.js
+  preloader-url: http://192.168.12.16:9000/web-apps/apps/api/documents/cache-scripts.html
+  viewed-docs: .pdf|.djvu|.xps
+  edited-docs: .docx|.xlsx|.csv|.pptx|.ppsx|.txt
+  convert-docs: .docm|.dotx|.dotm|.dot|.doc|.odt|.fodt|.xlsm|.xltx|.xltm|.xlt|.xls|.ods|.fods|.pptm|.ppt|.ppsm|.pps|.potx|.potm|.pot|.odp|.fodp|.rtf|.mht|.html|.htm|.epub
