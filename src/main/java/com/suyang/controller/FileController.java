@@ -35,7 +35,7 @@ public class FileController {
         return officeManager.getFiles();
     }
 
-    @RequestMapping("upload")
+    @RequestMapping("/upload")
     @ResponseBody
     public void upload(@RequestParam("file") MultipartFile file) throws APIException, IOException {
         if(!file.isEmpty()){
@@ -49,7 +49,7 @@ public class FileController {
         }
     }
 
-    @RequestMapping("download")
+    @RequestMapping("/download")
     public void download(String id, HttpServletResponse response) throws IOException {
         FileItem fileItem = officeManager.findById(id);
         if(fileItem != null){
@@ -58,7 +58,7 @@ public class FileController {
         }
     }
 
-    @RequestMapping("edit")
+    @RequestMapping("/edit")
     public String onlineEdit(Map<String, Object> map,
                              @RequestParam(name = "id", required = true) String id,
                              @RequestParam(name = "edit", required = false, defaultValue = "false") boolean edit,
