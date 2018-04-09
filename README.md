@@ -25,6 +25,12 @@
 > sudo supervisorctl restart onlyoffice-documentserver:docservice  
 > sudo supervisorctl restart onlyoffice-documentserver:converter
 
+# 备注
+日志位置  
+> /var/log/onlyoffice
+
+数据文件  
+> /var/www/onlyoffice/Data
 
 # 相关连接
 https://github.com/ONLYOFFICE/Docker-DocumentServer
