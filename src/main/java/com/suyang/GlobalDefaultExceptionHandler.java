@@ -55,7 +55,11 @@ public class GlobalDefaultExceptionHandler {
 	}
 
 	@ExceptionHandler(APIException.class)
-	public ResponseMessage handleAPIException(HttpServletRequest request, APIException ex) {
+	public ResponseMessage handleAPIException(HttpServletRequest request, APIException ex) throws APIException {
+		String path = request.getServletPath();
+		if(path.contains("/api/file/upload")){
+			throw ex;
+		}
 		return createErrorMessage(request, ex.getType().name(), ErrorType.API.getValue());
 	}
 

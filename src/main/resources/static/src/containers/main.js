@@ -43,9 +43,16 @@ class Main extends Component {
     }
 
     handlerOk() {
+        if(this.state.userId === ''){
+            message.error("用户Id不能为空！");
+            return;
+        }
+        if(this.state.userName === ''){
+            message.error("用户名称不能为空！");
+            return;
+        }
         this.setState({ visible: false });
-        console.log(this.state, this.isEdit, this.selectedFile);
-        window.open("/api/file/edit?id="+this.selectedFile.id+"&userId="+this.state.userId+"&userName="+this.state.userName+"&edit="+this.isEdit+"&d="+new Date().getTime());
+        window.open("/api/file/edit?id="+encodeURIComponent(this.selectedFile.id)+"&userId="+encodeURIComponent(this.state.userId)+"&userName="+encodeURIComponent(this.state.userName)+"&edit="+this.isEdit+"&d="+new Date().getTime());
     }
 
     handleCancel() {
