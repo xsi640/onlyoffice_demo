@@ -136,7 +136,7 @@ public class OfficeManager {
 
     private static FileItem convet(File file) {
         FileItem result = new FileItem();
-        result.setId(Md5Utils.getMD5fromString(file.getPath()));
+        result.setId(Md5Utils.getMD5fromString(file.getPath() + file.lastModified() + file.length()));
         result.setFileName(file.getName());
         result.setFileSize(file.length());
         String fileType = "";

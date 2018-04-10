@@ -64,6 +64,7 @@ public class FileController {
                              @RequestParam(name = "edit", required = false, defaultValue = "false") boolean edit,
                              String userId,
                              String userName,
+                             String type,
                              HttpServletRequest request) throws UnsupportedEncodingException {
         FileItem file = officeManager.findById(id);
         if (file != null) {
@@ -72,13 +73,17 @@ public class FileController {
             map.put("fileType", file.getFileType());
             map.put("docType", OfficeUtils.GetFileType(file.getFileName()));
             map.put("downloadUrl", RequestUtils.getPrefix(request) + "/api/file/download?id=" + file.getId());
-            String callbackQuery = "?type=track&fileName=" + URLEncoder.encode(file.getFileName(), "UTF-8") + "&userId" + URLEncoder.encode(userId, "UTF-8") + "&userName=" + URLEncoder.encode(userName, "UTF-8");
+            String callbackQuery = "?type=callback&fileName=" +
+                    URLEncoder.encode(file.getFileName(), "UTF-8") +
+                    "&userId" + URLEncoder.encode(userId, "UTF-8") +
+                    "&userName=" + URLEncoder.encode(userName, "UTF-8");
             map.put("configCallback", RequestUtils.getPrefix(request) + "/api/online/callback" + callbackQuery);
             map.put("callback", RequestUtils.getPrefix(request) + "/api/online/callback");
             map.put("id", file.getId());
             map.put("userId", userId);
             map.put("userName", userName);
             map.put("mode", edit ? "edit" : "view");
+            map.put("type", type);
             return "/online";
         }
         return "";

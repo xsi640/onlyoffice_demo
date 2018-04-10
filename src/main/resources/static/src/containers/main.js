@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Table, Upload, Button, Icon, message, Divider, Modal, Input } from 'antd';
+import { Table, Upload, Button, Icon, message, Divider, Modal, Input, Radio } from 'antd';
 import * as FileAction from '../actions/fileaction'
+const RadioGroup = Radio.Group;
 
 class Main extends Component {
 
@@ -18,6 +19,7 @@ class Main extends Component {
             visible: false,
             userId: '',
             userName: '',
+            type: 'desktop',
         }
 
         this.handleUploadCallback = this.handleUploadCallback.bind(this);
@@ -43,16 +45,16 @@ class Main extends Component {
     }
 
     handlerOk() {
-        if(this.state.userId === ''){
+        if (this.state.userId === '') {
             message.error("用户Id不能为空！");
             return;
         }
-        if(this.state.userName === ''){
+        if (this.state.userName === '') {
             message.error("用户名称不能为空！");
             return;
         }
         this.setState({ visible: false });
-        window.open("/api/file/edit?id="+encodeURIComponent(this.selectedFile.id)+"&userId="+encodeURIComponent(this.state.userId)+"&userName="+encodeURIComponent(this.state.userName)+"&edit="+this.isEdit+"&d="+new Date().getTime());
+        window.open("/api/file/edit?id=" + encodeURIComponent(this.selectedFile.id) + "&userId=" + encodeURIComponent(this.state.userId) + "&userName=" + encodeURIComponent(this.state.userName) + "&edit=" + this.isEdit + "&type=" + encodeURIComponent(this.state.type) + "&d=" + new Date().getTime());
     }
 
     handleCancel() {
@@ -114,6 +116,10 @@ class Main extends Component {
                     <div>
                         <Input placeholder="用户Id" value={this.state.userId} onChange={e => this.setState({ userId: e.target.value })} />
                         <Input placeholder="用户名称" value={this.state.userName} onChange={e => this.setState({ userName: e.target.value })} style={{ marginTop: 10 }} />
+                        <RadioGroup onChange={e => this.setState({ type: e.target.value })} value={this.state.type} style={{ marginTop: 10 }} >
+                            <Radio value="desktop">桌面</Radio>
+                            <Radio value="mobile">手机</Radio>
+                        </RadioGroup>
                     </div>
                 </Modal>
             </div>);

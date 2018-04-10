@@ -86,6 +86,7 @@
 				<directory>src/main/resources</directory>
 				<includes>
 					<include>static/dist/**</include>
+					<include>templates/**</include>
 					<include>*.yml</include>
 				</includes>
 			</resource>
